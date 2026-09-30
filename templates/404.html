@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>404 | Page Not Found</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            background: linear-gradient(135deg, #f5f3ff, #eef2ff);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #172033;
+            padding: 20px;
+        }
+
+        .box {
+            width: 100%;
+            max-width: 520px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+
+            padding: 45px 35px;
+
+            text-align: center;
+
+            box-shadow: 0 15px 40px rgba(31, 41, 55, 0.09);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .error-code {
+            font-size: 70px;
+            font-weight: 800;
+
+            color: #111827;
+
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .accent {
+            color: #84cc16;
+        }
+
+        h2 {
+            font-size: 23px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+
+            margin-bottom: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            background: #111827;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 20px;
+            border-radius: 9px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        .brand {
+            margin-top: 25px;
+
+            color: #6b7280;
+
+            font-size: 12px;
+        }
+
+        .brand span {
+            color: #84cc16;
+            font-size: 16px;
+        }
+
+        @media (max-width: 500px) {
+
+            .box {
+                padding: 35px 22px;
+            }
+
+            .error-code {
+                font-size: 58px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div class="box">
+
+        <div class="icon">
+            🔎
+        </div>
+
+        <div class="error-code">
+            4<span class="accent">0</span>4
+        </div>
+
+        <h2>
+            Page Not Found
+        </h2>
+
+        <p>
+            We couldn't find the page or study guide you're looking for.
+            It may have been moved or the link may be incorrect.
+        </p>
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="btn"
+        >
+            ← Back to Dashboard
+        </a>
+
+        <div class="brand">
+            <span>✦</span>
+            AI Learning Companion
+        </div>
+
+    </div>
+
+</body>
+
+</html>

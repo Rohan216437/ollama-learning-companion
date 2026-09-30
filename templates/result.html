@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ a.video_title }} — AI Learning Companion</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7f8ff 0%,
+                    #eef0ff 50%,
+                    #f9fff5 100%
+                );
+
+            color: #172033;
+            min-height: 100vh;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar-lc {
+            background: #141e30;
+
+            padding: 16px 42px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                0 5px 25px rgba(20, 30, 48, 0.18);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #8cff66;
+            color: #142033;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 0 15px rgba(140, 255, 102, 0.35);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            color: #e8ecf7;
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 9px 13px;
+            border-radius: 8px;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.10);
+        }
+
+        .logout {
+            background: #ef4444 !important;
+            color: white !important;
+        }
+
+
+        /* ================= PAGE ================= */
+
+        .page-container {
+            max-width: 1150px;
+
+            margin: 0 auto;
+
+            padding:
+                35px 20px 70px;
+        }
+
+
+        /* ================= VIDEO HERO ================= */
+
+        .video-hero {
+            background: white;
+
+            border-radius: 23px;
+
+            padding: 22px;
+
+            display: flex;
+
+            gap: 25px;
+
+            align-items: center;
+
+            box-shadow:
+                0 10px 30px rgba(30,40,80,0.08);
+
+            border: 1px solid #eceefa;
+
+            margin-bottom: 28px;
+        }
+
+        .video-thumbnail {
+            width: 340px;
+
+            height: 190px;
+
+            object-fit: cover;
+
+            border-radius: 15px;
+
+            display: block;
+
+            background: #eef0f7;
+        }
+
+        .video-info {
+            flex: 1;
+        }
+
+        .result-label {
+            display: inline-block;
+
+            background: #efffe9;
+
+            color: #3f702f;
+
+            border-radius: 20px;
+
+            padding: 7px 12px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            margin-bottom: 12px;
+
+            letter-spacing: .4px;
+        }
+
+        .video-title {
+            font-size: 27px;
+
+            font-weight: bold;
+
+            line-height: 1.3;
+
+            color: #141e30;
+
+            margin-bottom: 10px;
+        }
+
+        .meta {
+            color: #7b8395;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+        .youtube-link {
+            color: #635bdb;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .youtube-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .action-buttons {
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: inline-block;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8cff66,
+                    #b3ff8d
+                );
+
+            color: #172033;
+
+            padding: 11px 17px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 6px 16px rgba(140,255,102,.22);
+        }
+
+        .download-btn:hover {
+            color: #172033;
+
+            transform: translateY(-1px);
+        }
+
+        .back-btn {
+            display: inline-block;
+
+            background: #141e30;
+
+            color: white;
+
+            padding: 11px 17px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            color: white;
+
+            background: #243b55;
+        }
+
+
+        /* ================= TABS ================= */
+
+        .study-card {
+            background: white;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 10px 30px rgba(30,40,80,0.07);
+
+            border: 1px solid #eceefa;
+        }
+
+        .lc-tabs {
+            border: none;
+
+            gap: 8px;
+
+            margin-bottom: 25px !important;
+
+            flex-wrap: wrap;
+        }
+
+        .lc-tabs .nav-item {
+            margin: 0;
+        }
+
+        .lc-tabs .nav-link {
+            border: none !important;
+
+            border-radius: 10px;
+
+            padding: 10px 15px;
+
+            color: #6d7487;
+
+            background: #f5f6fb;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: .2s ease;
+        }
+
+        .lc-tabs .nav-link:hover {
+            background: #eeedff;
+
+            color: #635bdb;
+        }
+
+        .lc-tabs .nav-link.active {
+            background: #141e30;
+
+            color: white;
+        }
+
+
+        /* ================= SUMMARY ================= */
+
+        .section-heading {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .section-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: #efffe9;
+
+            font-size: 20px;
+        }
+
+        .section-heading h3 {
+            margin: 0;
+
+            font-size: 20px;
+
+            color: #172033;
+        }
+
+        .lc-summary-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #fafaff,
+                    #f4f3ff
+                );
+
+            border: 1px solid #e8e7fb;
+
+            border-left: 5px solid #7c83ff;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            color: #4d5568;
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+            white-space: pre-line;
+        }
+
+
+        /* ================= KEY POINTS ================= */
+
+        .lc-keypoint {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 13px;
+
+            background: #fafbff;
+
+            border: 1px solid #eceefa;
+
+            border-radius: 13px;
+
+            padding: 17px 18px;
+
+            margin-bottom: 12px;
+
+            color: #4e5668;
+
+            line-height: 1.6;
+
+            transition: .2s ease;
+        }
+
+        .lc-keypoint:hover {
+            transform: translateX(3px);
+
+            border-color: #dfe0fa;
+
+            background: #f8f8ff;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+
+            min-width: 9px;
+
+            border-radius: 50%;
+
+            background: #8cff66;
+
+            margin-top: 8px;
+
+            box-shadow:
+                0 0 8px rgba(140,255,102,.4);
+        }
+
+
+        /* ================= GLOSSARY ================= */
+
+        .glossary-card {
+            height: 100%;
+
+            background: #fafbff;
+
+            border: 1px solid #eceefa;
+
+            border-radius: 14px;
+
+            padding: 19px;
+
+            transition: .2s ease;
+        }
+
+        .glossary-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(40,48,90,.06);
+        }
+
+        .lc-glossary-term {
+            display: inline-block;
+
+            color: #635bdb;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+            font-size: 15px;
+        }
+
+        .glossary-definition {
+            color: #60687a;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= FLASHCARDS ================= */
+
+        .flashcard-note {
+            color: #858c9d;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        .lc-flashcard {
+            height: 220px;
+
+            perspective: 1000px;
+
+            cursor: pointer;
+        }
+
+        .lc-flashcard .inner {
+            width: 100%;
+            height: 100%;
+
+            position: relative;
+
+            transition:
+                transform .6s;
+
+            transform-style: preserve-3d;
+        }
+
+        .lc-flashcard.flipped .inner {
+            transform: rotateY(180deg);
+        }
+
+        .face {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            backface-visibility: hidden;
+
+            border-radius: 17px;
+
+            padding: 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            line-height: 1.6;
+
+            font-size: 15px;
+
+            box-shadow:
+                0 8px 22px rgba(30,40,80,.07);
+
+            border: 1px solid #e6e7f1;
+        }
+
+        .front {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f0efff
+                );
+
+            color: #30384b;
+        }
+
+        .back {
+            background:
+                linear-gradient(
+                    135deg,
+                    #efffe9,
+                    #ffffff
+                );
+
+            color: #30384b;
+
+            transform: rotateY(180deg);
+        }
+
+        .hint {
+            position: absolute;
+
+            bottom: 13px;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .5px;
+
+            color: #9aa1b2;
+        }
+
+
+        /* ================= QUIZ ================= */
+
+        .lc-quiz-q {
+            background: #fafbff;
+
+            border: 1px solid #eceefa;
+
+            border-radius: 16px;
+
+            padding: 21px;
+
+            margin-bottom: 17px;
+        }
+
+        .quiz-question {
+            color: #20283a;
+
+            font-size: 16px;
+
+            line-height: 1.5;
+
+            margin-bottom: 15px;
+
+            font-weight: bold;
+        }
+
+        .lc-quiz-opt {
+            background: white;
+
+            border: 1px solid #e1e4ef;
+
+            border-radius: 10px;
+
+            padding: 12px 15px;
+
+            margin-top: 8px;
+
+            cursor: pointer;
+
+            color: #535b6c;
+
+            font-size: 14px;
+
+            transition: .2s ease;
+        }
+
+        .lc-quiz-opt:hover {
+            border-color: #7c83ff;
+
+            background: #f5f4ff;
+        }
+
+        .lc-quiz-opt.correct {
+            background: #dcfce7;
+
+            border-color: #86efac;
+
+            color: #166534;
+        }
+
+        .lc-quiz-opt.wrong {
+            background: #fee2e2;
+
+            border-color: #fca5a5;
+
+            color: #991b1b;
+        }
+
+        .lc-quiz-explain {
+            display: none;
+
+            margin-top: 13px;
+
+            padding: 13px;
+
+            border-radius: 9px;
+
+            background: #f0efff;
+
+            color: #555d70;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .lc-quiz-q.answered .lc-quiz-explain {
+            display: block;
+        }
+
+        #quizScore {
+            background: #141e30;
+
+            color: white;
+
+            padding: 15px 18px;
+
+            border-radius: 12px;
+
+            display: inline-block;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= ALERTS ================= */
+
+        .custom-alert {
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 22px;
+
+            border: 1px solid #eceefa;
+
+            box-shadow:
+                0 8px 25px rgba(30,40,80,.06);
+
+            margin-bottom: 20px;
+        }
+
+        .custom-alert.error {
+            border-left: 5px solid #ef4444;
+        }
+
+        .custom-alert.warning {
+            border-left: 5px solid #f59e0b;
+        }
+
+        .custom-alert strong {
+            color: #20283a;
+        }
+
+        .custom-alert p {
+            color: #697184;
+
+            margin: 7px 0 0;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            .navbar-lc {
+                flex-direction: column;
+
+                gap: 14px;
+
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+            .page-container {
+                padding:
+                    25px 15px 50px;
+            }
+
+            .video-hero {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                padding: 17px;
+            }
+
+            .video-thumbnail {
+                width: 100%;
+
+                height: auto;
+
+                aspect-ratio: 16 / 9;
+            }
+
+            .video-title {
+                font-size: 23px;
+            }
+
+            .study-card {
+                padding: 18px;
+            }
+
+            .lc-tabs {
+                gap: 6px;
+            }
+
+            .lc-tabs .nav-link {
+                font-size: 12px;
+
+                padding: 9px 11px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================== -->
+<!-- NAVBAR -->
+<!-- ===================================================== -->
+
+<nav class="navbar-lc">
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="brand"
+    >
+
+        <div class="brand-icon">
+            ✦
+        </div>
+
+        <span>
+            AI Learning Companion
+        </span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('profile') }}">
+            Profile
+        </a>
+
+        {% if session.get("is_admin") %}
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Admin
+        </a>
+
+        {% endif %}
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ===================================================== -->
+<!-- PAGE -->
+<!-- ===================================================== -->
+
+<div class="page-container">
+
+
+    <!-- ================================================= -->
+    <!-- VIDEO HEADER -->
+    <!-- ================================================= -->
+
+    <div class="video-hero">
+
+
+        {% if a.thumbnail_url %}
+
+        <img
+            src="{{ a.thumbnail_url }}"
+            class="video-thumbnail"
+            alt="Video thumbnail"
+        >
+
+        {% endif %}
+
+
+        <div class="video-info">
+
+            <div class="result-label">
+                ✦ AI STUDY MATERIAL
+            </div>
+
+
+            <div class="video-title">
+                {{ a.video_title }}
+            </div>
+
+
+            <div class="meta">
+
+                {% if a.channel_name %}
+                    🎬 {{ a.channel_name }}
+                    &nbsp; · &nbsp;
+                {% endif %}
+
+                <a
+                    href="{{ a.video_url }}"
+                    target="_blank"
+                    rel="noopener"
+                    class="youtube-link"
+                >
+                    Watch on YouTube ↗
+                </a>
+
+            </div>
+
+
+            <div class="action-buttons">
+
+                {% if a.status == 'done' %}
+
+                <a
+                    href="{{ url_for('export_pdf', analysis_id=a.id) }}"
+                    class="download-btn"
+                >
+                    ⬇ Download PDF Study Guide
+                </a>
+
+                {% endif %}
+
+
+                <a
+                    href="{{ url_for('dashboard') }}"
+                    class="back-btn"
+                >
+                    ← Analyze Another
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- FAILED -->
+    <!-- ================================================= -->
+
+    {% if a.status == 'failed' %}
+
+    <div class="custom-alert error">
+
+        <strong>
+            ❌ Couldn't generate a study guide.
+        </strong>
+
+        <p>
+            {{ a.error_message }}
+        </p>
+
+    </div>
+
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="back-btn"
+    >
+        ← Try Another Video
+    </a>
+
+
+    <!-- ================================================= -->
+    <!-- PENDING -->
+    <!-- ================================================= -->
+
+    {% elif a.status == 'pending' %}
+
+    <div class="custom-alert warning">
+
+        <strong>
+            ⏳ Video is still processing
+        </strong>
+
+        <p>
+            Your study material is being generated.
+            Please refresh this page in a moment.
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- DONE -->
+    <!-- ================================================= -->
+
+    {% else %}
+
+
+    <div class="study-card">
+
+
+        <!-- ================================================= -->
+        <!-- TABS -->
+        <!-- ================================================= -->
+
+        <ul
+            class="nav nav-tabs lc-tabs"
+            id="resultTabs"
+            role="tablist"
+        >
+
+            <li class="nav-item">
+
+                <button
+                    class="nav-link active"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-summary"
+                    type="button"
+                >
+                    📝 Summary
+                </button>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <button
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-points"
+                    type="button"
+                >
+                    💡 Key Points
+                </button>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <button
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-glossary"
+                    type="button"
+                >
+                    📖 Glossary
+                </button>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <button
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-flashcards"
+                    type="button"
+                >
+                    🧠 Flashcards
+                </button>
+
+            </li>
+
+
+            <li class="nav-item">
+
+                <button
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-quiz"
+                    type="button"
+                >
+                    ❓ Quiz
+                </button>
+
+            </li>
+
+        </ul>
+
+
+        <!-- ================================================= -->
+        <!-- TAB CONTENT -->
+        <!-- ================================================= -->
+
+        <div class="tab-content">
+
+
+            <!-- ================= SUMMARY ================= -->
+
+            <div
+                class="tab-pane fade show active"
+                id="tab-summary"
+            >
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        📝
+                    </div>
+
+                    <h3>
+                        AI Generated Summary
+                    </h3>
+
+                </div>
+
+
+                <div class="lc-summary-box">
+
+                    {{ a.summary }}
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= KEY POINTS ================= -->
+
+            <div
+                class="tab-pane fade"
+                id="tab-points"
+            >
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        💡
+                    </div>
+
+                    <h3>
+                        Important Key Points
+                    </h3>
+
+                </div>
+
+
+                {% for kp in a.key_points %}
+
+                <div class="lc-keypoint">
+
+                    <div class="dot"></div>
+
+                    <div>
+                        {{ kp }}
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- ================= GLOSSARY ================= -->
+
+            <div
+                class="tab-pane fade"
+                id="tab-glossary"
+            >
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        📖
+                    </div>
+
+                    <h3>
+                        Important Terms
+                    </h3>
+
+                </div>
+
+
+                <div class="row g-3">
+
+                    {% for g in a.glossary %}
+
+                    <div class="col-md-6">
+
+                        <div class="glossary-card">
+
+                            <div class="lc-glossary-term">
+                                {{ g.term }}
+                            </div>
+
+                            <div class="glossary-definition">
+                                {{ g.definition }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= FLASHCARDS ================= -->
+
+            <div
+                class="tab-pane fade"
+                id="tab-flashcards"
+            >
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        Flashcards
+                    </h3>
+
+                </div>
+
+
+                <p class="flashcard-note">
+                    Click a card to flip it and reveal the answer.
+                </p>
+
+
+                <div class="row g-3">
+
+                    {% for card in a.flashcards %}
+
+                    <div class="col-md-4 col-sm-6">
+
+                        <div
+                            class="lc-flashcard"
+                            onclick="this.classList.toggle('flipped')"
+                        >
+
+                            <div class="inner">
+
+
+                                <div class="face front">
+
+                                    {{ card.front }}
+
+                                    <span class="hint">
+                                        CLICK TO FLIP
+                                    </span>
+
+                                </div>
+
+
+                                <div class="face back">
+
+                                    {{ card.back }}
+
+                                    <span class="hint">
+                                        CLICK TO FLIP BACK
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= QUIZ ================= -->
+
+            <div
+                class="tab-pane fade"
+                id="tab-quiz"
+            >
+
+                <div class="section-heading">
+
+                    <div class="section-icon">
+                        ❓
+                    </div>
+
+                    <h3>
+                        Test Your Knowledge
+                    </h3>
+
+                </div>
+
+
+                <div id="quizWrap">
+
+
+                    {% for q in a.quiz %}
+
+                    <div
+                        class="lc-quiz-q"
+                        data-correct="{{ q.correct_index }}"
+                    >
+
+
+                        <div class="quiz-question">
+
+                            {{ loop.index }}.
+                            {{ q.question }}
+
+                        </div>
+
+
+                        {% for opt in q.options %}
+
+                        <div
+                            class="lc-quiz-opt"
+                            data-idx="{{ loop.index0 }}"
+                        >
+
+                            <strong>
+                                {{ "ABCD"[loop.index0] }}.
+                            </strong>
+
+                            {{ opt }}
+
+                        </div>
+
+                        {% endfor %}
+
+
+                        <div class="lc-quiz-explain">
+
+                            💡
+                            {{ q.explanation }}
+
+                        </div>
+
+
+                    </div>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+                <div
+                    class="mt-3"
+                    id="quizScore"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- BOOTSTRAP JS -->
+<!-- ===================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- ===================================================== -->
+<!-- QUIZ JS -->
+<!-- ===================================================== -->
+
+{% block extra_scripts %}
+
+<script
+    src="{{ url_for('static', filename='js/quiz.js') }}">
+</script>
+
+{% endblock %}
+
+
+</body>
+
+</html>

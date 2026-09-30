@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ user.name }}'s History | Admin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f3ff, #eef2ff);
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 6%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.15);
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: 700;
+
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .brand-icon {
+            color: #84cc16;
+            font-size: 24px;
+        }
+
+        .admin-text {
+            color: #d1d5db;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e5e7eb;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #a3e635;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white !important;
+            padding: 9px 15px;
+            border-radius: 8px;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1050px;
+            margin: 45px auto;
+            padding: 0 22px;
+        }
+
+        /* ================= BACK BUTTON ================= */
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            margin-bottom: 22px;
+
+            color: #374151;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            color: #4f46e5;
+        }
+
+        /* ================= PAGE HEADING ================= */
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            font-size: 30px;
+            color: #111827;
+            margin-bottom: 7px;
+        }
+
+        .heading p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= USER PROFILE CARD ================= */
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow: 0 12px 30px rgba(31, 41, 55, 0.07);
+
+            margin-bottom: 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .avatar {
+            width: 65px;
+            height: 65px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: #111827;
+            color: #a3e635;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 27px;
+            font-weight: 700;
+
+            border: 4px solid #ecfccb;
+        }
+
+        .user-details h2 {
+            color: #111827;
+            font-size: 21px;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .analysis-count {
+            text-align: center;
+
+            background: #f7fee7;
+            border: 1px solid #d9f99d;
+
+            padding: 15px 22px;
+
+            border-radius: 13px;
+
+            min-width: 130px;
+        }
+
+        .analysis-count-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #365314;
+        }
+
+        .analysis-count-label {
+            color: #4d7c0f;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* ================= SECTION HEADER ================= */
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 17px;
+        }
+
+        .section-header h2 {
+            color: #111827;
+            font-size: 19px;
+        }
+
+        .section-badge {
+            background: #f3f4f6;
+            color: #4b5563;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* ================= HISTORY CARD ================= */
+
+        .history-card {
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+
+            padding: 21px;
+
+            margin-bottom: 14px;
+
+            box-shadow: 0 8px 24px rgba(31, 41, 55, 0.05);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            transition: 0.2s;
+        }
+
+        .history-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(31, 41, 55, 0.09);
+        }
+
+        .video-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .video-title {
+            color: #111827;
+            font-size: 16px;
+            line-height: 1.4;
+
+            margin-bottom: 9px;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+
+            color: #6b7280;
+            font-size: 12px;
+
+            margin-bottom: 10px;
+        }
+
+        .status {
+            display: inline-block;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+        }
+
+        .done {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* ================= VIEW BUTTON ================= */
+
+        .view-btn {
+            display: inline-block;
+
+            background: #111827;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 15px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition: 0.2s;
+        }
+
+        .view-btn:hover {
+            background: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: rgba(255, 255, 255, 0.96);
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            padding: 45px 25px;
+
+            text-align: center;
+
+            box-shadow: 0 10px 25px rgba(31, 41, 55, 0.05);
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .empty h3 {
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .container {
+                margin: 32px auto;
+            }
+
+            .heading h1 {
+                font-size: 26px;
+            }
+
+            .profile-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .analysis-count {
+                width: 100%;
+            }
+
+            .history-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .view-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .meta {
+                flex-direction: column;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <span class="brand-icon">✦</span>
+
+            <span>
+                AI Learning Companion
+            </span>
+
+            <span class="admin-text">
+                / Admin
+            </span>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                Admin Dashboard
+            </a>
+
+            <a href="{{ url_for('dashboard') }}">
+                My Dashboard
+            </a>
+
+            <a href="{{ url_for('profile') }}">
+                Profile
+            </a>
+
+            <a href="{{ url_for('logout') }}" class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back"
+        >
+            ← Back to Admin Dashboard
+        </a>
+
+
+        <div class="heading">
+
+            <h1>
+                User Learning History
+            </h1>
+
+            <p>
+                View the YouTube learning activity of this user.
+            </p>
+
+        </div>
+
+
+        <!-- ================= USER PROFILE ================= -->
+
+        <div class="profile-card">
+
+            <div class="user-info">
+
+                <div class="avatar">
+                    {{ user.name[0]|upper }}
+                </div>
+
+                <div class="user-details">
+
+                    <h2>
+                        {{ user.name }}
+                    </h2>
+
+                    <p>
+                        📧 {{ user.email }}
+                    </p>
+
+                    <p>
+                        📅 Member since
+                        {{ user.created_at.strftime("%b %d, %Y") }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="analysis-count">
+
+                <div class="analysis-count-number">
+                    {{ analyses|length }}
+                </div>
+
+                <div class="analysis-count-label">
+                    Videos Analyzed
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= HISTORY ================= -->
+
+        <div class="section-header">
+
+            <h2>
+                📚 Analysis History
+            </h2>
+
+            <span class="section-badge">
+                {{ analyses|length }} Records
+            </span>
+
+        </div>
+
+
+        {% if analyses %}
+
+            {% for analysis in analyses %}
+
+            <div class="history-card">
+
+                <div class="video-info">
+
+                    <h3 class="video-title">
+                        {{ analysis.video_title }}
+                    </h3>
+
+
+                    <div class="meta">
+
+                        <span>
+                            🎬 {{ analysis.channel_name or "Unknown Channel" }}
+                        </span>
+
+                        <span>
+                            📅 {{ analysis.created_at.strftime("%b %d, %Y") }}
+                        </span>
+
+                        <span>
+                            🕒 {{ analysis.created_at.strftime("%H:%M") }}
+                        </span>
+
+                    </div>
+
+
+                    {% if analysis.status == "done" %}
+
+                    <span class="status done">
+                        ✓ Completed
+                    </span>
+
+                    {% elif analysis.status == "failed" %}
+
+                    <span class="status failed">
+                        ✕ Failed
+                    </span>
+
+                    {% else %}
+
+                    <span class="status pending">
+                        ⏳ Pending
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                {% if analysis.status == "done" %}
+
+                <a
+                    href="{{ url_for('result', analysis_id=analysis.id) }}"
+                    class="view-btn"
+                >
+                    View Study Material →
+                </a>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📚
+                </div>
+
+                <h3>
+                    No Learning History Yet
+                </h3>
+
+                <p>
+                    This user has not analyzed any YouTube videos yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

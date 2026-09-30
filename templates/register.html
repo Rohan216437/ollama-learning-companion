@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | AI Learning Companion</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            background: linear-gradient(
+                135deg,
+                #141e30,
+                #243b55,
+                #6c63ff
+            );
+
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           ANIMATED BACKGROUND
+        ===================================================== */
+
+        .circle {
+            position: fixed;
+            border-radius: 50%;
+
+            filter: blur(2px);
+            opacity: 0.35;
+
+            animation: float 8s infinite ease-in-out;
+
+            z-index: 0;
+        }
+
+        .circle.one {
+            width: 250px;
+            height: 250px;
+
+            background: #8cff66;
+
+            top: -80px;
+            left: -80px;
+        }
+
+        .circle.two {
+            width: 300px;
+            height: 300px;
+
+            background: #7c83ff;
+
+            bottom: -120px;
+            right: -100px;
+
+            animation-delay: 2s;
+        }
+
+        .circle.three {
+            width: 150px;
+            height: 150px;
+
+            background: #ff8bd1;
+
+            top: 20%;
+            right: 10%;
+
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-30px);
+            }
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .register-container {
+
+            width: 90%;
+            max-width: 950px;
+            min-height: 550px;
+
+            display: flex;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
+
+            overflow: hidden;
+
+            animation: appear 0.8s ease;
+
+            z-index: 2;
+        }
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+
+        /* =====================================================
+           LEFT / WELCOME SECTION
+        ===================================================== */
+
+        .welcome-section {
+
+            width: 50%;
+
+            padding: 60px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .logo-mark {
+
+            font-size: 78px;
+
+            color: #9cff6e;
+
+            margin-bottom: 25px;
+
+            font-weight: 300;
+
+            text-shadow:
+                0 0 12px rgba(156, 255, 110, 0.6),
+                0 0 30px rgba(156, 255, 110, 0.25);
+
+            animation: logoFloat 3s infinite ease-in-out;
+        }
+
+        @keyframes logoFloat {
+
+            0%, 100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+        }
+
+        .welcome-section h1 {
+
+            color: white;
+
+            font-size: 45px;
+
+            line-height: 1.1;
+
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h1 span {
+
+            color: #9cff6e;
+        }
+
+        .welcome-section p {
+
+            color: #d9d9d9;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            max-width: 400px;
+        }
+
+
+        /* =====================================================
+           RIGHT / FORM SECTION
+        ===================================================== */
+
+        .form-section {
+
+            width: 50%;
+
+            padding: 55px 60px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            background: rgba(10, 15, 30, 0.35);
+        }
+
+        .form-section h2 {
+
+            color: white;
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+
+            color: #bdbdbd;
+
+            margin-bottom: 28px;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           FLASH MESSAGES
+        ===================================================== */
+
+        .messages {
+
+            margin-bottom: 18px;
+        }
+
+        .message {
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            background: rgba(255, 70, 70, 0.18);
+
+            color: #ffb3b3;
+
+            border: 1px solid rgba(255, 100, 100, 0.3);
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-group {
+
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            color: #eeeeee;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+        .input-box {
+
+            position: relative;
+        }
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 17px;
+        }
+
+        .input-box input {
+
+            width: 100%;
+
+            padding: 14px 15px 14px 45px;
+
+            border: 1px solid rgba(255,255,255,0.2);
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background: rgba(255,255,255,0.1);
+
+            color: white;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        .input-box input::placeholder {
+
+            color: #aaa;
+        }
+
+        .input-box input:focus {
+
+            border-color: #9cff6e;
+
+            box-shadow:
+                0 0 15px rgba(156, 255, 110, 0.2);
+        }
+
+
+        /* =====================================================
+           CREATE ACCOUNT BUTTON
+        ===================================================== */
+
+        .register-btn {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: linear-gradient(
+                90deg,
+                #8cff66,
+                #b3ff8d
+            );
+
+            color: #172018;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            margin-top: 4px;
+        }
+
+        .register-btn:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(140, 255, 102, 0.3);
+        }
+
+        .register-btn:active {
+
+            transform: scale(0.98);
+        }
+
+
+        /* =====================================================
+           LOGIN LINK
+        ===================================================== */
+
+        .login-text {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #aaa;
+
+            font-size: 14px;
+        }
+
+        .login-text a {
+
+            color: #9cff6e;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 750px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .register-container {
+
+                flex-direction: column;
+
+                min-height: auto;
+
+                width: 100%;
+            }
+
+            .welcome-section {
+
+                width: 100%;
+
+                padding: 35px;
+
+                text-align: center;
+            }
+
+            .welcome-section h1 {
+
+                font-size: 32px;
+            }
+
+            .welcome-section p {
+
+                margin: auto;
+            }
+
+            .logo-mark {
+
+                font-size: 60px;
+
+                margin-bottom: 15px;
+            }
+
+            .form-section {
+
+                width: 100%;
+
+                padding: 35px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Animated background -->
+
+    <div class="circle one"></div>
+    <div class="circle two"></div>
+    <div class="circle three"></div>
+
+
+    <!-- Main container -->
+
+    <div class="register-container">
+
+
+        <!-- =================================================
+             LEFT SIDE
+        ================================================== -->
+
+        <div class="welcome-section">
+
+            <div class="logo-mark">✦</div>
+
+            <h1>
+                Learn <span>Smarter.</span>
+            </h1>
+
+            <p>
+                Welcome to AI Learning Companion.
+                Create your account and turn YouTube
+                videos into summaries, key points,
+                quizzes, flashcards and easy-to-understand
+                study material.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT SIDE
+        ================================================== -->
+
+        <div class="form-section">
+
+            <h2>
+                Create Account
+            </h2>
+
+            <p class="subtitle">
+                Start your AI-powered learning journey.
+            </p>
+
+
+            <!-- Flask messages -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    <div class="messages">
+
+                        {% for category, message in messages %}
+
+                            <div class="message">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- REGISTER FORM -->
+
+            <form
+                method="POST"
+                action="{{ url_for('register') }}"
+            >
+
+
+                <!-- Full Name -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            ✉️
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Minimum 6 characters"
+                            minlength="6"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Button -->
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                >
+                    Create Account →
+                </button>
+
+            </form>
+
+
+            <!-- Login link -->
+
+            <div class="login-text">
+
+                Already have an account?
+
+                <a href="{{ url_for('login') }}">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

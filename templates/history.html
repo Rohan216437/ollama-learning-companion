@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My History | AI Learning Companion</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7f8ff 0%,
+                    #eef0ff 50%,
+                    #f9fff5 100%
+                );
+
+            color: #172033;
+
+            min-height: 100vh;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+
+            background: #141e30;
+
+            color: white;
+
+            padding: 17px 42px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 5px 25px rgba(20, 30, 48, 0.18);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+
+        .brand-icon {
+
+            width: 36px;
+
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #8cff66;
+
+            color: #142033;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 0 15px rgba(140, 255, 102, 0.35);
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+
+        .nav-links a {
+
+            color: #e8ecf7;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 9px 13px;
+
+            border-radius: 8px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            background:
+                rgba(255,255,255,0.10);
+
+            color: white;
+        }
+
+
+        .logout {
+
+            background: #ef4444 !important;
+
+            color: white !important;
+        }
+
+
+        .logout:hover {
+
+            background: #dc2626 !important;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+
+            max-width: 1150px;
+
+            margin: 0 auto;
+
+            padding:
+                45px 25px 70px;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .page-header {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f0efff,
+                    #efffe9
+                );
+
+            border-radius: 23px;
+
+            padding: 32px 35px;
+
+            margin-bottom: 30px;
+
+            border:
+                1px solid rgba(108,99,255,0.10);
+
+            box-shadow:
+                0 10px 30px rgba(30,40,80,0.07);
+        }
+
+
+        .page-header::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(140,255,102,0.15);
+
+            right: -60px;
+
+            top: -75px;
+        }
+
+
+        .header-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .header-tag {
+
+            display: inline-block;
+
+            background: #efffe9;
+
+            color: #3f702f;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+
+        .page-header h1 {
+
+            font-size: 31px;
+
+            color: #141e30;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-header p {
+
+            color: #70788d;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ================= STATS ================= */
+
+        .history-info {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+
+        .history-info h2 {
+
+            font-size: 22px;
+
+            color: #20283a;
+        }
+
+
+        .count-badge {
+
+            background: #141e30;
+
+            color: white;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= GRID ================= */
+
+        .history-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 21px;
+        }
+
+
+        /* ================= CARD ================= */
+
+        .card {
+
+            background: white;
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            border:
+                1px solid #eceefa;
+
+            box-shadow:
+                0 7px 23px rgba(30,40,80,0.07);
+
+            transition: 0.25s ease;
+        }
+
+
+        .card:hover {
+
+            transform:
+                translateY(-5px);
+
+            box-shadow:
+                0 14px 30px rgba(30,40,80,0.11);
+        }
+
+
+        .thumbnail-wrapper {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 175px;
+
+            overflow: hidden;
+
+            background: #eef0f7;
+        }
+
+
+        .card img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition: 0.3s ease;
+        }
+
+
+        .card:hover img {
+
+            transform: scale(1.04);
+        }
+
+
+        .video-badge {
+
+            position: absolute;
+
+            left: 12px;
+
+            bottom: 12px;
+
+            background:
+                rgba(20,30,48,0.88);
+
+            color: white;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+
+        .card-content {
+
+            padding: 19px;
+        }
+
+
+        .card h3 {
+
+            color: #20283a;
+
+            font-size: 16px;
+
+            line-height: 1.45;
+
+            margin-bottom: 10px;
+
+            min-height: 47px;
+
+            display: -webkit-box;
+
+            -webkit-line-clamp: 2;
+
+            -webkit-box-orient: vertical;
+
+            overflow: hidden;
+        }
+
+
+        .channel {
+
+            color: #6f7789;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .date {
+
+            color: #9aa1b2;
+
+            font-size: 12px;
+
+            margin-bottom: 17px;
+        }
+
+
+        .view-btn {
+
+            display: block;
+
+            width: 100%;
+
+            text-align: center;
+
+            padding: 10px 14px;
+
+            border-radius: 9px;
+
+            background: #141e30;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: 0.2s ease;
+        }
+
+
+        .view-btn:hover {
+
+            background: #243b55;
+
+            color: white;
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+
+            background: white;
+
+            padding: 60px 30px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            border:
+                1px solid #eceefa;
+
+            box-shadow:
+                0 8px 25px rgba(30,40,80,0.06);
+        }
+
+
+        .empty-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin:
+                0 auto 18px;
+
+            border-radius: 50%;
+
+            background: #f0efff;
+
+            font-size: 30px;
+        }
+
+
+        .empty h2 {
+
+            color: #20283a;
+
+            font-size: 21px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .empty p {
+
+            color: #7c8495;
+
+            font-size: 14px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .analyze-link {
+
+            display: inline-block;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8cff66,
+                    #b3ff8d
+                );
+
+            color: #172033;
+
+            text-decoration: none;
+
+            padding: 11px 17px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 6px 16px rgba(140,255,102,.22);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 50px;
+
+            color: #9298a8;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= TABLET ================= */
+
+        @media (max-width: 950px) {
+
+            .history-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                flex-direction: column;
+
+                gap: 14px;
+
+                padding: 15px 20px;
+            }
+
+
+            .nav-links {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+            }
+
+
+            .container {
+
+                padding:
+                    28px 15px 50px;
+            }
+
+
+            .page-header {
+
+                padding:
+                    27px 23px;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 27px;
+            }
+
+
+            .history-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .history-info h2 {
+
+                font-size: 20px;
+            }
+
+        }
+
+
+        @media (max-width: 430px) {
+
+            .brand {
+
+                font-size: 18px;
+            }
+
+
+            .brand-icon {
+
+                width: 32px;
+
+                height: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================== -->
+<!-- NAVBAR -->
+<!-- ===================================================== -->
+
+<nav class="navbar">
+
+
+    <a
+        href="{{ url_for('dashboard') }}"
+        class="brand"
+    >
+
+        <div class="brand-icon">
+            ✦
+        </div>
+
+        <span>
+            AI Learning Companion
+        </span>
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('profile') }}">
+            Profile
+        </a>
+
+
+        {% if session.get("is_admin") %}
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Admin
+        </a>
+
+        {% endif %}
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ===================================================== -->
+<!-- MAIN -->
+<!-- ===================================================== -->
+
+<div class="container">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="page-header">
+
+        <div class="header-content">
+
+            <div class="header-tag">
+                ✦ YOUR LEARNING JOURNEY
+            </div>
+
+            <h1>
+                My Study History 📚
+            </h1>
+
+            <p>
+                Revisit the videos you've analyzed and
+                continue learning from your AI-generated
+                study material.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% if analyses %}
+
+
+    <!-- ================= TITLE ================= -->
+
+    <div class="history-info">
+
+        <h2>
+            Your Previous Analyses
+        </h2>
+
+        <div class="count-badge">
+
+            {{ analyses|length }}
+            {% if analyses|length == 1 %}
+                Analysis
+            {% else %}
+                Analyses
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CARDS ================= -->
+
+    <div class="history-grid">
+
+
+        {% for analysis in analyses %}
+
+
+        <div class="card">
+
+
+            {% if analysis.thumbnail_url %}
+
+            <div class="thumbnail-wrapper">
+
+                <img
+                    src="{{ analysis.thumbnail_url }}"
+                    alt="Video thumbnail"
+                >
+
+                <div class="video-badge">
+                    ▶ YOUTUBE
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div
+                class="thumbnail-wrapper"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:35px;
+                "
+            >
+                ▶
+            </div>
+
+            {% endif %}
+
+
+            <div class="card-content">
+
+
+                <h3>
+                    {{ analysis.video_title }}
+                </h3>
+
+
+                <div class="channel">
+
+                    🎬
+                    {{ analysis.channel_name or "YouTube" }}
+
+                </div>
+
+
+                <div class="date">
+
+                    📅
+                    {{ analysis.created_at.strftime("%b %d, %Y %H:%M") }}
+
+                </div>
+
+
+                <a
+                    class="view-btn"
+                    href="{{ url_for('result', analysis_id=analysis.id) }}"
+                >
+                    View Study Material →
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- ================= EMPTY ================= -->
+
+    <div class="empty">
+
+        <div class="empty-icon">
+            📚
+        </div>
+
+
+        <h2>
+            No study history yet
+        </h2>
+
+
+        <p>
+            You haven't analyzed any YouTube videos yet.
+            Start your learning journey from the dashboard.
+        </p>
+
+
+        <a
+            href="{{ url_for('dashboard') }}"
+            class="analyze-link"
+        >
+            Analyze Your First Video →
+        </a>
+
+    </div>
+
+
+    {% endif %}
+
+
+    <div class="footer">
+
+        AI Learning Companion • Learn Smarter ✦
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

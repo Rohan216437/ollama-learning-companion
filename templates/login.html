@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | AI Learning Companion</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(
+                135deg,
+                #141e30,
+                #243b55,
+                #6c63ff
+            );
+            overflow: hidden;
+        }
+
+        /* Animated background circles */
+
+        .circle {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.35;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .circle.one {
+            width: 250px;
+            height: 250px;
+            background: #8cff66;
+            top: -80px;
+            left: -80px;
+        }
+
+        .circle.two {
+            width: 300px;
+            height: 300px;
+            background: #7c83ff;
+            bottom: -120px;
+            right: -100px;
+            animation-delay: 2s;
+        }
+
+        .circle.three {
+            width: 150px;
+            height: 150px;
+            background: #ff8bd1;
+            top: 20%;
+            right: 10%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        /* Login card */
+
+        .login-container {
+            width: 90%;
+            max-width: 950px;
+            min-height: 550px;
+
+            display: flex;
+
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 25px;
+
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+
+            overflow: hidden;
+
+            animation: appear 0.8s ease;
+            z-index: 2;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Left section */
+
+        .welcome-section {
+            width: 50%;
+            padding: 60px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .welcome-section h1 {
+            color: white;
+            font-size: 45px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h1 span {
+            color: #9cff6e;
+        }
+
+        .welcome-section p {
+            color: #d9d9d9;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 400px;
+        }
+
+
+        .logo-mark {
+                width: 85px;
+                height: 85px;
+                margin-bottom: 25px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                border: 2px solid #9cff6e;
+                border-radius: 22px;
+
+                background: rgba(156, 255, 110, 0.08);
+
+                box-shadow:
+                    0 0 20px rgba(156, 255, 110, 0.25),
+                    inset 0 0 20px rgba(156, 255, 110, 0.05);
+
+                animation: logoFloat 3s ease-in-out infinite;
+            }
+
+            .logo-mark span {
+                color: #9cff6e;
+                font-size: 48px;
+                line-height: 1;
+
+                text-shadow:
+                    0 0 12px rgba(156, 255, 110, 0.7);
+            }
+
+            @keyframes logoFloat {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
+
+        .form-section {
+            width: 50%;
+            padding: 60px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            background: rgba(10, 15, 30, 0.35);
+        }
+
+        .form-section h2 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #bdbdbd;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        /* Flash messages */
+
+        .message {
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+
+        .message.error {
+            background: rgba(255, 70, 70, 0.18);
+            color: #ffb3b3;
+            border: 1px solid rgba(255, 100, 100, 0.3);
+        }
+
+        .message.success {
+            background: rgba(100, 255, 130, 0.15);
+            color: #b8ffca;
+            border: 1px solid rgba(100, 255, 130, 0.3);
+        }
+
+        /* Input */
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #eeeeee;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box span {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+
+            outline: none;
+
+            background: rgba(255,255,255,0.1);
+            color: white;
+
+            font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        .input-box input::placeholder {
+            color: #aaa;
+        }
+
+        .input-box input:focus {
+            border-color: #9cff6e;
+            box-shadow: 0 0 15px rgba(156, 255, 110, 0.2);
+        }
+
+        /* Login button */
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: linear-gradient(
+                90deg,
+                #8cff66,
+                #b3ff8d
+            );
+
+            color: #172018;
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(140, 255, 102, 0.3);
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Register */
+
+        .register-text {
+            text-align: center;
+            margin-top: 25px;
+
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .register-text a {
+            color: #9cff6e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 750px) {
+
+            .login-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .welcome-section {
+                width: 100%;
+                padding: 35px;
+                text-align: center;
+            }
+
+            .welcome-section h1 {
+                font-size: 32px;
+            }
+
+            .welcome-section p {
+                margin: auto;
+            }
+
+            .brain {
+                font-size: 60px;
+            }
+
+            .form-section {
+                width: 100%;
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="circle one"></div>
+    <div class="circle two"></div>
+    <div class="circle three"></div>
+
+    <div class="login-container">
+
+        <!-- LEFT SIDE -->
+
+        <div class="welcome-section">
+
+           <div class="logo-mark">
+                <span>✦</span>
+        </div>   
+
+            <h1>
+                Learn <span>Smarter.</span>
+            </h1>
+
+            <p>
+                Welcome to AI Learning Companion.
+                Turn YouTube videos into summaries,
+                key points, quizzes, flashcards and
+                easy-to-understand study material.
+            </p>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="form-section">
+
+            <h2>Welcome Back!</h2>
+
+            <p class="subtitle">
+                Login to continue your learning journey.
+            </p>
+
+
+            <!-- Flask messages -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="message {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- LOGIN FORM -->
+
+            <form method="POST" action="{{ url_for('login') }}">
+
+                <div class="input-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>✉️</span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>🔒</span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="login-btn">
+                    Login →
+                </button>
+
+            </form>
+
+
+            <div class="register-text">
+
+                Don't have an account?
+
+                <a href="{{ url_for('register') }}">
+                    Register Now
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | AI Learning Companion</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background:
+                linear-gradient(135deg, #f7f8ff 0%, #eef0ff 50%, #f9fff5 100%);
+            color: #172033;
+            min-height: 100vh;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #141e30;
+            color: white;
+
+            padding: 17px 42px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                0 5px 25px rgba(20, 30, 48, 0.18);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 21px;
+            font-weight: bold;
+            letter-spacing: 0.2px;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #8cff66;
+            color: #142033;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+            font-size: 18px;
+
+            box-shadow:
+                0 0 15px rgba(140, 255, 102, 0.35);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: #e8ecf7;
+            text-decoration: none;
+
+            font-size: 14px;
+
+            padding: 9px 13px;
+            border-radius: 8px;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.10);
+            color: white;
+        }
+
+        .logout {
+            background: #ef4444 !important;
+            color: white !important;
+
+            padding: 9px 16px !important;
+        }
+
+        .logout:hover {
+            background: #dc2626 !important;
+        }
+
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 45px 25px 70px;
+        }
+
+
+        /* ================= WELCOME HERO ================= */
+
+        .welcome {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 38px 40px;
+
+            margin-bottom: 30px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f0efff 55%,
+                    #efffe9 100%
+                );
+
+            border: 1px solid rgba(108, 99, 255, 0.10);
+
+            box-shadow:
+                0 12px 35px rgba(40, 48, 90, 0.08);
+        }
+
+        .welcome::before {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            background: rgba(140, 255, 102, 0.18);
+
+            border-radius: 50%;
+
+            right: -60px;
+            top: -70px;
+        }
+
+        .welcome::after {
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+            height: 130px;
+
+            background: rgba(108, 99, 255, 0.10);
+
+            border-radius: 50%;
+
+            right: 120px;
+            bottom: -75px;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-tag {
+            display: inline-block;
+
+            background: rgba(140, 255, 102, 0.25);
+
+            color: #315c22;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            margin-bottom: 14px;
+        }
+
+        .welcome h1 {
+            font-size: 34px;
+            color: #141e30;
+
+            margin-bottom: 10px;
+        }
+
+        .welcome h1 span {
+            color: #635bdb;
+        }
+
+        .welcome p {
+            color: #687086;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+
+        /* ================= ANALYZER ================= */
+
+        .analyzer {
+            background: white;
+
+            padding: 34px;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 10px 30px rgba(30, 40, 80, 0.08);
+
+            margin-bottom: 35px;
+
+            border: 1px solid #eceefe;
+        }
+
+        .analyzer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            margin-bottom: 9px;
+        }
+
+        .analyzer-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background: #141e30;
+            color: #8cff66;
+
+            font-size: 21px;
+
+            box-shadow:
+                0 5px 15px rgba(20, 30, 48, 0.18);
+        }
+
+        .analyzer h2 {
+            font-size: 23px;
+            color: #172033;
+        }
+
+        .analyzer-description {
+            color: #70788d;
+
+            margin-left: 63px;
+            margin-bottom: 25px;
+
+            line-height: 1.5;
+        }
+
+        .url-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .url-input {
+            flex: 1;
+
+            padding: 15px 17px;
+
+            border: 2px solid #e5e7f0;
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            color: #172033;
+
+            background: #fafbff;
+
+            transition: 0.2s ease;
+        }
+
+        .url-input:focus {
+            border-color: #7c83ff;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 4px rgba(124, 131, 255, 0.10);
+        }
+
+        .url-input::placeholder {
+            color: #9aa1b2;
+        }
+
+        .analyze-btn {
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8cff66,
+                    #b3ff8d
+                );
+
+            color: #172033;
+
+            padding: 14px 25px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 18px rgba(140, 255, 102, 0.25);
+
+            transition: 0.2s ease;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 23px rgba(140, 255, 102, 0.35);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+            margin-top: 20px;
+
+            padding: 14px 16px;
+
+            border-radius: 10px;
+
+            display: none;
+
+            font-size: 14px;
+        }
+
+        .message.error {
+            display: block;
+
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .message.success {
+            display: block;
+
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .loading {
+            margin-top: 18px;
+
+            display: none;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features-section {
+            margin-bottom: 38px;
+        }
+
+        .features-title {
+            margin-bottom: 18px;
+        }
+
+        .features-title h2 {
+            font-size: 23px;
+            color: #172033;
+        }
+
+        .features-title p {
+            margin-top: 6px;
+
+            color: #777f92;
+            font-size: 14px;
+        }
+
+        .features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 13px;
+        }
+
+        .feature {
+            background: rgba(255,255,255,0.85);
+
+            padding: 19px 15px;
+
+            border-radius: 15px;
+
+            border: 1px solid #e8eafa;
+
+            box-shadow:
+                0 6px 18px rgba(40, 48, 90, 0.05);
+
+            transition: 0.2s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 12px 25px rgba(40, 48, 90, 0.09);
+        }
+
+        .feature-icon {
+            font-size: 22px;
+
+            margin-bottom: 10px;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+
+            margin-bottom: 5px;
+
+            color: #20283a;
+        }
+
+        .feature p {
+            color: #858b9b;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+        }
+
+
+        /* ================= RECENT HISTORY ================= */
+
+        .section-title {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 24px;
+            color: #172033;
+        }
+
+        .view-all {
+            color: #635bdb;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            padding: 8px 12px;
+
+            border-radius: 8px;
+
+            transition: 0.2s ease;
+        }
+
+        .view-all:hover {
+            background: #eeedff;
+        }
+
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+
+            border-radius: 17px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 7px 23px rgba(30, 40, 80, 0.07);
+
+            border: 1px solid #eceefa;
+
+            transition: 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 14px 30px rgba(30, 40, 80, 0.11);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 165px;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .card-content {
+            padding: 18px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+
+            color: #20283a;
+
+            margin-bottom: 10px;
+
+            line-height: 1.4;
+
+            min-height: 45px;
+        }
+
+        .channel {
+            color: #6f7789;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .date {
+            color: #a0a6b5;
+
+            font-size: 12px;
+
+            margin-bottom: 16px;
+        }
+
+        .view-btn {
+            display: inline-block;
+
+            background: #141e30;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 14px;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            transition: 0.2s ease;
+        }
+
+        .view-btn:hover {
+            background: #243b55;
+        }
+
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+
+            padding: 7px 10px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status.failed {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .status.processing {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: white;
+
+            padding: 48px 30px;
+
+            border-radius: 18px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+            box-shadow:
+                0 7px 22px rgba(30, 40, 80, 0.06);
+
+            border: 1px solid #eceefa;
+        }
+
+        .empty-icon {
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 15px;
+
+            border-radius: 50%;
+
+            background: #f0efff;
+
+            font-size: 28px;
+        }
+
+        .empty h3 {
+            color: #20283a;
+
+            font-size: 19px;
+
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            font-size: 14px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            margin-top: 50px;
+
+            color: #9298a8;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= TABLET ================= */
+
+        @media (max-width: 950px) {
+
+            .features {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .cards {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                flex-direction: column;
+
+                gap: 15px;
+
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                gap: 3px;
+            }
+
+            .container {
+                padding:
+                    28px 15px 50px;
+            }
+
+            .welcome {
+                padding: 28px 23px;
+            }
+
+            .welcome h1 {
+                font-size: 27px;
+            }
+
+            .welcome p {
+                font-size: 14px;
+            }
+
+            .analyzer {
+                padding: 24px 20px;
+            }
+
+            .analyzer-header {
+                align-items: flex-start;
+            }
+
+            .analyzer h2 {
+                font-size: 20px;
+            }
+
+            .analyzer-description {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .url-form {
+                flex-direction: column;
+            }
+
+            .analyze-btn {
+                width: 100%;
+            }
+
+            .features {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 21px;
+            }
+
+        }
+
+
+        /* ================= SMALL MOBILE ================= */
+
+        @media (max-width: 430px) {
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .brand {
+                font-size: 18px;
+            }
+
+            .brand-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================== -->
+<!-- NAVBAR -->
+<!-- ===================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            ✦
+        </div>
+
+        <span>
+            AI Learning Companion
+        </span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+        <a href="{{ url_for('profile') }}">
+            Profile
+        </a>
+
+        {% if session.get("is_admin") %}
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Admin
+        </a>
+
+        {% endif %}
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ===================================================== -->
+<!-- MAIN -->
+<!-- ===================================================== -->
+
+<div class="container">
+
+
+    <!-- ================================================= -->
+    <!-- WELCOME -->
+    <!-- ================================================= -->
+
+    <div class="welcome">
+
+        <div class="welcome-content">
+
+            <div class="welcome-tag">
+                ✦ YOUR LEARNING SPACE
+            </div>
+
+            <h1>
+                Welcome back,
+                <span>{{ session.get("user_name", "Student") }}</span> 👋
+            </h1>
+
+            <p>
+                Learn smarter, not harder.
+                Turn YouTube videos into organized,
+                AI-powered study material in seconds.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ANALYZER -->
+    <!-- ================================================= -->
+
+    <div class="analyzer">
+
+        <div class="analyzer-header">
+
+            <div class="analyzer-icon">
+                ▶
+            </div>
+
+            <h2>
+                Analyze a YouTube Video
+            </h2>
+
+        </div>
+
+
+        <p class="analyzer-description">
+
+            Paste a YouTube video link and let AI create
+            notes, key points, flashcards, glossary and quiz
+            for you.
+
+        </p>
+
+
+        <form
+            id="analyzeForm"
+            class="url-form"
+        >
+
+            <input
+                type="url"
+                id="youtubeUrl"
+                class="url-input"
+                placeholder="https://youtube.com/watch?v=..."
+                required
+            >
+
+            <button
+                type="submit"
+                id="analyzeBtn"
+                class="analyze-btn"
+            >
+                Analyze Video →
+            </button>
+
+        </form>
+
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            ⏳ Analyzing video with AI... Please wait.
+        </div>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- FEATURES -->
+    <!-- ================================================= -->
+
+    <div class="features-section">
+
+        <div class="features-title">
+
+            <h2>
+                What you'll get
+            </h2>
+
+            <p>
+                One video. Complete study material.
+            </p>
+
+        </div>
+
+
+        <div class="features">
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📝
+                </div>
+
+                <h3>
+                    Smart Summary
+                </h3>
+
+                <p>
+                    Quick and easy-to-understand
+                    AI-generated summary.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    💡
+                </div>
+
+                <h3>
+                    Key Points
+                </h3>
+
+                <p>
+                    Important concepts extracted
+                    from the video.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    Flashcards
+                </h3>
+
+                <p>
+                    Revise important concepts
+                    with generated flashcards.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ❓
+                </div>
+
+                <h3>
+                    Quiz
+                </h3>
+
+                <p>
+                    Test your understanding with
+                    AI-generated questions.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📖
+                </div>
+
+                <h3>
+                    Glossary
+                </h3>
+
+                <p>
+                    Understand difficult terms
+                    in simple language.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- RECENT ANALYSES -->
+    <!-- ================================================= -->
+
+    <div class="section-title">
+
+        <h2>
+            📚 Recent Analyses
+        </h2>
+
+        <a
+            href="{{ url_for('history') }}"
+            class="view-all"
+        >
+            View All →
+        </a>
+
+    </div>
+
+
+    {% if recent %}
+
+    <div class="cards">
+
+        {% for analysis in recent %}
+
+        <div class="card">
+
+
+            {% if analysis.thumbnail_url %}
+
+            <img
+                src="{{ analysis.thumbnail_url }}"
+                class="thumbnail"
+                alt="Video thumbnail"
+            >
+
+            {% endif %}
+
+
+            <div class="card-content">
+
+
+                <div class="card-title">
+
+                    {{ analysis.video_title[:70] }}
+
+                    {% if analysis.video_title|length > 70 %}
+                        ...
+                    {% endif %}
+
+                </div>
+
+
+                <div class="channel">
+
+                    🎬
+                    {{ analysis.channel_name or "YouTube" }}
+
+                </div>
+
+
+                <div class="date">
+
+                    📅
+                    {{ analysis.created_at.strftime("%b %d, %Y") }}
+
+                </div>
+
+
+                {% if analysis.status == "done" %}
+
+                <a
+                    href="{{ url_for('result', analysis_id=analysis.id) }}"
+                    class="view-btn"
+                >
+                    View Study Material →
+                </a>
+
+
+                {% elif analysis.status == "failed" %}
+
+                <span class="status failed">
+                    ❌ Analysis Failed
+                </span>
+
+
+                {% else %}
+
+                <span class="status processing">
+                    ⏳ Processing
+                </span>
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+
+    <div class="empty">
+
+        <div class="empty-icon">
+            📖
+        </div>
+
+        <h3>
+            No analyses yet
+        </h3>
+
+        <p>
+            Paste a YouTube video above to create your
+            first AI-generated study material.
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+
+    <div class="footer">
+
+        AI Learning Companion • Learn Smarter ✦
+
+    </div>
+
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script>
+
+const form =
+    document.getElementById("analyzeForm");
+
+const urlInput =
+    document.getElementById("youtubeUrl");
+
+const analyzeBtn =
+    document.getElementById("analyzeBtn");
+
+const loading =
+    document.getElementById("loading");
+
+const message =
+    document.getElementById("message");
+
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const url =
+            urlInput.value.trim();
+
+
+        if (!url) {
+
+            showMessage(
+                "Please paste a YouTube video URL.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        analyzeBtn.disabled = true;
+
+        analyzeBtn.textContent =
+            "Analyzing...";
+
+        loading.style.display =
+            "block";
+
+        message.style.display =
+            "none";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "{{ url_for('api_analyze') }}",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                url: url
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (data.ok) {
+
+                showMessage(
+                    "Analysis completed! Redirecting...",
+                    "success"
+                );
+
+
+                window.location.href =
+                    data.redirect;
+
+            }
+
+            else {
+
+                showMessage(
+                    data.error ||
+                    "Something went wrong.",
+                    "error"
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            showMessage(
+                "Could not connect to the server.",
+                "error"
+            );
+
+        }
+
+
+        analyzeBtn.disabled =
+            false;
+
+        analyzeBtn.textContent =
+            "Analyze Video →";
+
+        loading.style.display =
+            "none";
+
+    }
+);
+
+
+function showMessage(text, type) {
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message " + type;
+
+    message.style.display =
+        "block";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

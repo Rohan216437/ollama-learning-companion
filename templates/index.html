@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}AI Learning Companion — Turn YouTube Videos into Study Guides{% endblock %}
+
+{% block content %}
+<section class="lc-hero">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9">
+        <span class="lc-eyebrow">Paste a link → get a study guide</span>
+        <h1 class="mb-3">Turn any <span class="highlight">YouTube video</span> into study notes, flashcards &amp; a quiz.</h1>
+        <p class="lead mb-4">Paste a YouTube URL. AI Learning Companion reads the transcript and drafts a summary, key points, a glossary, flashcards, and a practice quiz — ready to export as a PDF.</p>
+
+        <form id="analyzeForm" class="lc-url-card" novalidate>
+          <label for="videoUrl" class="form-label fw-semibold mb-2">YouTube video URL</label>
+          <div class="d-flex flex-column flex-sm-row gap-2">
+            <input type="text" class="form-control flex-grow-1" id="videoUrl" name="url"
+                   placeholder="https://www.youtube.com/watch?v=..." autocomplete="off" required>
+            <button type="submit" class="btn btn-lc-primary" id="analyzeBtn">
+              Generate study guide
+            </button>
+          </div>
+          <div class="lc-loading" id="loadingRow">
+            <div class="lc-spinner"></div>
+            <div>
+              <div id="loadingText">Fetching transcript…</div>
+              <div class="lc-progress-note">This can take up to 30 seconds for long videos.</div>
+            </div>
+          </div>
+          <div class="alert alert-danger mt-3 mb-0 d-none" id="errorBox"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5">
+  <h2 class="h4 mb-4">How it works</h2>
+  <div class="row g-3">
+    <div class="col-md-3 col-6">
+      <div class="lc-step">
+        <div class="step-num">01 / TRANSCRIPT</div>
+        <p class="mb-0 mt-2">We pull the video's transcript automatically — no upload needed.</p>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="lc-step">
+        <div class="step-num">02 / ANALYZE</div>
+        <p class="mb-0 mt-2">Ollama reads the transcript and identifies key ideas and terms.</p>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="lc-step">
+        <div class="step-num">03 / STUDY SET</div>
+        <p class="mb-0 mt-2">Get a summary, key points, glossary, flashcards, and a quiz.</p>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="lc-step">
+        <div class="step-num">04 / EXPORT</div>
+        <p class="mb-0 mt-2">Download the whole study guide as a polished PDF.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if recent %}
+<section class="container pb-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h4 mb-0">Recently analyzed</h2>
+    <a href="{{ url_for('history') }}" class="small">View all →</a>
+  </div>
+  <div class="row g-3">
+    {% for r in recent %}
+    <div class="col-md-4 col-sm-6">
+      <a href="{{ url_for('result', analysis_id=r.id) }}" class="lc-recent-card">
+        <img src="{{ r.thumbnail_url }}" alt="">
+        <div class="body">
+          <div class="title">{{ r.video_title }}</div>
+          <div class="meta">{{ r.channel_name }} · {{ r.created_at.strftime('%b %d, %Y') }}</div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+{% endblock %}
